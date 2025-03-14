@@ -15,8 +15,8 @@ int main() {
     // cout << is_adjacent("date", "data") << endl;
     // cout << generate_word_ladder("sleep", "awake", word_list).size() << endl;
 
-   // verify_word_ladder();
-    print_word_ladder(generate_word_ladder("ae", "nf", word_list));
+   //verify_word_ladder();
+    print_word_ladder(generate_word_ladder("Marty", "curls", word_list));
 
 
 }

@@ -4,27 +4,35 @@ void error(string word1, string word2, string word3) {
 cerr << "Error: " << word1 << " " << word2 << " " << word3 << endl;
 }
 
-//used this pseudocode from https://en.wikipedia.org/wiki/Levenshtein_distance
 bool edit_distance_within(const std::string& str1, const std::string& str2, int d) {
-    int lenStr1 = str1.size();
-    int lenStr2 = str2.size();
+    int len1 = str1.size(), len2 = str2.size();
 
-    if (std::abs(lenStr1 - lenStr2) > d) return false;
+    if (abs(len1 - len2) > d) return false;
 
-    std::vector<std::vector<int>> d_matrix(lenStr1 + 1, std::vector<int>(lenStr2 + 1));
+    int edits = 0;
+    int i = 0, j = 0;
 
-    for (int i = 0; i <= lenStr1; ++i) d_matrix[i][0] = i;
-    for (int j = 0; j <= lenStr2; ++j) d_matrix[0][j] = j;
-
-    for (int i = 1; i <= lenStr1; ++i) {
-        for (int j = 1; j <= lenStr2; ++j) {
-            int cost = (str1[i - 1] == str2[j - 1]) ? 0 : 1;
-            d_matrix[i][j] = std::min({d_matrix[i - 1][j] + 1,d_matrix[i][j - 1] + 1,d_matrix[i - 1][j - 1] + cost});
+    if (len1 == len2) {
+        for (int k = 0; k < len1; ++k) {
+            if (str1[k] != str2[k]) {
+                if (++edits > d) return false;
+            }
         }
     }
+    else {
+        while (i < len1 && j < len2) {
+            if (str1[i] != str2[j]) {
+                if (++edits > d) return false;
+                (len1 > len2) ? ++i : ++j;
+            } else {
+                ++i, ++j;
+            }
+        }
+        if (i < len1 || j < len2) ++edits;
+        return edits <= d;
+    }
 
-    int edit_distance = d_matrix[lenStr1][lenStr2];
-    return edit_distance <= d;
+    return edits <= d;
 }
 
 
