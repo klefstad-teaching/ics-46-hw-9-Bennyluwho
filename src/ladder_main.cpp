@@ -16,7 +16,7 @@ int main() {
     // cout << generate_word_ladder("sleep", "awake", word_list).size() << endl;
 
    // verify_word_ladder();
-    print_word_ladder(generate_word_ladder("sleep", "sleep", word_list));
+    print_word_ladder(generate_word_ladder("ae", "nf", word_list));
 
 
 }
